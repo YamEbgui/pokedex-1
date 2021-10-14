@@ -1,5 +1,11 @@
+/** General & Variables **/
 const searchButton = document.querySelector(`#search-button`);
 const searchInput = document.querySelector(`#search-input`);
+const imageElement = document.getElementById(`image`);
+
+let pokemon = null;
+
+/** API & Network**/
 
 //get pokemon data from pokeapi.co
 async function getPokemon(name) {
@@ -12,17 +18,26 @@ async function getPokemon(name) {
 	}
 }
 
-/**  event listeners **/
-searchButton.addEventListener(`click`, () => {
-	getPokemon(searchInput.value).then((pokemon) => {
-		addPokemonToPage(pokemon);
-	});
+/**  Event Listeners **/
+
+searchButton.addEventListener(`click`, async () => {
+	pokemon = await getPokemon(searchInput.value);
+	addPokemonToPage(pokemon);
+});
+
+//change pokemon image to back on mouse over
+imageElement.addEventListener(`mouseenter`, () => {
+	imageElement.setAttribute(`src`, pokemon.sprites.back_default);
+});
+
+//change pokemon image to front whn mouse leave
+imageElement.addEventListener(`mouseleave`, () => {
+	imageElement.setAttribute(`src`, pokemon.sprites.front_default);
 });
 
 /** DOM **/
 
 function addPokemonToPage(pokemon) {
-	console.log(pokemon);
 	const name = document.getElementById('name');
 	const height = document.getElementById('height');
 	const weight = document.getElementById('weight');
