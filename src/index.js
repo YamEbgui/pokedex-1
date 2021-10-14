@@ -10,19 +10,27 @@ let pokemon = null;
 //get pokemon data from pokeapi.co
 async function getPokemon(name) {
 	try {
-		return axios
+		return await axios
 			.get(`https://pokeapi.co/api/v2/pokemon/${name}`)
 			.then((response) => response.data);
-	} catch {
-		alert(error);
+	} catch (error) {
+		//if pokemon doesn't exist
+		alert(`Can't find a Pokemon with this name or ID.\nPlease try again!`);
+		throw `Pokemon Not Found`;
 	}
 }
 
 /**  Event Listeners **/
 
 searchButton.addEventListener(`click`, async () => {
-	pokemon = await getPokemon(searchInput.value);
-	addPokemonToPage(pokemon);
+	if (searchInput.value) {
+		//check if user entered name/ID
+		pokemon = await getPokemon(searchInput.value);
+		addPokemonToPage(pokemon);
+		searchInput.value = ``;
+	} else {
+		alert(`Please enter a Pokemon name or ID`);
+	}
 });
 
 //change pokemon image to back on mouse over
@@ -38,11 +46,13 @@ imageElement.addEventListener(`mouseleave`, () => {
 /** DOM **/
 
 function addPokemonToPage(pokemon) {
+	//get html elements
 	const name = document.getElementById('name');
 	const height = document.getElementById('height');
 	const weight = document.getElementById('weight');
 	const image = document.getElementById(`image`);
 
+	//change values
 	name.replaceChildren(document.createTextNode(pokemon.name));
 	height.replaceChildren(document.createTextNode(pokemon.height));
 	weight.replaceChildren(document.createTextNode(pokemon.weight));
