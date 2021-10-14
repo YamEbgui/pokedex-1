@@ -23,15 +23,13 @@ searchButton.addEventListener(`click`, () => {
 
 function addPokemonToPage(pokemon) {
 	console.log(pokemon);
-	const pokemonDiv = document.getElementById('pokemon');
-
 	const name = document.getElementById('name');
 	const height = document.getElementById('height');
 	const weight = document.getElementById('weight');
 	const image = document.getElementById(`image`);
 
-	name.appendChild(document.createTextNode(pokemon.name));
-	height.appendChild(document.createTextNode(pokemon.height));
-	weight.appendChild(document.createTextNode(pokemon.weight));
+	name.replaceChildren(document.createTextNode(pokemon.name));
+	height.replaceChildren(document.createTextNode(pokemon.height));
+	weight.replaceChildren(document.createTextNode(pokemon.weight));
 	image.setAttribute('src', pokemon.sprites.front_default);
 }
