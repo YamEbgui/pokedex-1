@@ -68,6 +68,12 @@ function addEventsToType(typeElement) {
 	});
 }
 
+function showPokemonFromList(pokemonLiElement) {
+	pokemonLiElement.addEventListener(`click`, async () => {
+		getPokemonInfo(pokemonLiElement.innerText);
+	});
+}
+
 /** DOM **/
 
 //create a pokemon object
@@ -136,6 +142,7 @@ async function createPokemonsList(type) {
 	for (const pokemon of pokemonsListObject) {
 		let pokemonLiElement = document.createElement(`li`);
 		pokemonLiElement.innerHTML = pokemon.pokemon.name;
+		showPokemonFromList(pokemonLiElement); //add event listener to every pokemon on list
 		pokemonsList.appendChild(pokemonLiElement);
 	}
 	pokemonTypeList.appendChild(pokemonsList);
@@ -145,4 +152,10 @@ async function createPokemonsList(type) {
 //remove existing list from page
 function removeList(list) {
 	list.remove();
+}
+
+//show new pokemon from the type list
+async function getPokemonInfo(pokemonName) {
+	const newPokemon = await getPokemon(pokemonName);
+	addPokemonToPage(newPokemon);
 }
