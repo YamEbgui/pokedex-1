@@ -31,6 +31,7 @@ async function getPokemonsOfType(type) {
 		alert(`There are no more Pokemon's from type: ${type}`);
 	}
 }
+
 /**  Event Listeners **/
 
 searchButton.addEventListener(`click`, async () => {
@@ -39,7 +40,6 @@ searchButton.addEventListener(`click`, async () => {
 		pokemon = await getPokemon(searchInput.value);
 		addPokemonToPage(pokemon);
 		searchInput.value = ``;
-		addTypeList(pokemon.types);
 	} else {
 		alert(`Please enter a Pokemon name or ID`);
 	}
@@ -55,45 +55,94 @@ imageElement.addEventListener(`mouseleave`, () => {
 	imageElement.setAttribute(`src`, pokemon.sprites.front_default);
 });
 
+//enables to click on a pokemon type to get a list of more pokemon from the same type
+function addEventsToType(typeElement) {
+	typeElement.addEventListener(`click`, async () => {
+		if (!document.getElementById(`type-list`)) {
+			const list = await createPokemonsList(typeElement.innerHTML);
+			document.getElementById(`pokemon`).appendChild(list);
+		} else {
+			const list = await createPokemonsList(typeElement.innerHTML);
+			document.getElementById(`type-list`).replaceWith(list); //remove list
+		}
+	});
+}
+
 /** DOM **/
 
-function addPokemonToPage(pokemon) {
+//create a pokemon object
+function createPokemon(name, height, weight, types, image) {
 	//get html elements
-	const name = document.getElementById('name');
-	const height = document.getElementById('height');
-	const weight = document.getElementById('weight');
-	const image = document.getElementById(`image`);
+	const nameElement = document.getElementById('name');
+	const heightElement = document.getElementById('height');
+	const weightElement = document.getElementById('weight');
+	const typeElement = document.getElementById(`type`);
+	const imageElement = document.getElementById(`image`);
 
-	//change values
-	name.replaceChildren(document.createTextNode(pokemon.name));
-	height.replaceChildren(document.createTextNode(pokemon.height));
-	weight.replaceChildren(document.createTextNode(pokemon.weight));
-	image.setAttribute('src', pokemon.sprites.front_default);
+	//set new values
+	nameElement.replaceChildren(document.createTextNode(name));
+	heightElement.replaceChildren(document.createTextNode(height));
+	weightElement.replaceChildren(document.createTextNode(weight));
+	imageElement.setAttribute('src', image);
+
+	//handling types
+	if (typeElement.innerHTML) {
+		typeElement.innerHTML = ``; //reset list content
+		for (const type of types) {
+			let typeText = document.createElement(`span`);
+			typeText.innerHTML = `${type} `;
+			addEventsToType(typeText);
+
+			typeElement.appendChild(typeText);
+		}
+	} else {
+		for (const type of types) {
+			let typeText = document.createElement(`span`);
+			typeText.innerHTML = `${type} `;
+			addEventsToType(typeText);
+
+			typeElement.appendChild(typeText);
+		}
+	}
+}
+
+function addPokemonToPage(pokemon) {
+	let name = pokemon.name;
+	let height = pokemon.height;
+	let weight = pokemon.weight;
+	let types = [];
+	let image = pokemon.sprites.front_default;
+
+	//get all the pokemon types
+	for (const pokemonType of pokemon.types) {
+		types.push(pokemonType.type.name);
+	}
+
+	//if a list already exist - remove it
+	if (document.getElementById(`type-list`)) {
+		removeList(document.getElementById(`type-list`));
+	}
+	createPokemon(name, height, weight, types, image);
 }
 
 //create a list of pokemon's
-function createPokemonsList(pokemons) {
+async function createPokemonsList(type) {
+	const pokemonTypeList = document.createElement(`div`);
+	pokemonTypeList.setAttribute(`id`, `type-list`);
 	const pokemonsList = document.createElement(`ul`);
+	const pokemonsListObject = await getPokemonsOfType(type);
 
-	for (const pokemon of pokemons) {
+	//build the list
+	for (const pokemon of pokemonsListObject) {
 		let pokemonLiElement = document.createElement(`li`);
 		pokemonLiElement.innerHTML = pokemon.pokemon.name;
 		pokemonsList.appendChild(pokemonLiElement);
 	}
-	return pokemonsList;
+	pokemonTypeList.appendChild(pokemonsList);
+	return pokemonTypeList;
 }
 
-//add a list of pokemon's from the same type
-async function addTypeList(types) {
-	document.getElementById('type-list').innerHTML = ''; //reset list
-
-	for (const type of types) {
-		//add a title for the list
-		const listHeading = document.createElement(`h3`);
-		listHeading.innerText = `More "${type.type.name}" type Pokemon's:`;
-		document.getElementById('type-list').appendChild(listHeading);
-		const pokemonsListObject = await getPokemonsOfType(type.type.name);
-		const list = createPokemonsList(pokemonsListObject);
-		document.getElementById('type-list').appendChild(list);
-	}
+//remove existing list from page
+function removeList(list) {
+	list.remove();
 }
