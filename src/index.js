@@ -1,9 +1,6 @@
 /** General & Variables **/
 const searchButton = document.querySelector(`#search-button`);
 const searchInput = document.querySelector(`#search-input`);
-const imageElement = document.getElementById(`image`);
-
-let pokemon = null;
 
 /** API & Network**/
 
@@ -46,14 +43,18 @@ searchButton.addEventListener(`click`, async () => {
 });
 
 //change pokemon image to back on mouse over
-imageElement.addEventListener(`mouseenter`, () => {
-	imageElement.setAttribute(`src`, pokemon.sprites.back_default);
-});
+function showBackImage(frontImage, backImage) {
+	const imageElement = document.getElementById(`image`);
 
-//change pokemon image to front whn mouse leave
-imageElement.addEventListener(`mouseleave`, () => {
-	imageElement.setAttribute(`src`, pokemon.sprites.front_default);
-});
+	imageElement.addEventListener(`mouseenter`, () => {
+		imageElement.setAttribute(`src`, backImage);
+	});
+
+	//change pokemon image to front whn mouse leave
+	imageElement.addEventListener(`mouseleave`, () => {
+		imageElement.setAttribute(`src`, frontImage);
+	});
+}
 
 //enables to click on a pokemon type to get a list of more pokemon from the same type
 function addEventsToType(typeElement) {
@@ -117,7 +118,8 @@ function addPokemonToPage(pokemon) {
 	let height = pokemon.height;
 	let weight = pokemon.weight;
 	let types = [];
-	let image = pokemon.sprites.front_default;
+	let frontImage = pokemon.sprites.front_default;
+	let backImage = pokemon.sprites.back_default;
 
 	//get all the pokemon types
 	for (const pokemonType of pokemon.types) {
@@ -128,13 +130,15 @@ function addPokemonToPage(pokemon) {
 	if (document.getElementById(`type-list`)) {
 		removeList(document.getElementById(`type-list`));
 	}
-	createPokemon(name, height, weight, types, image);
+	createPokemon(name, height, weight, types, frontImage);
+
+	showBackImage(frontImage, backImage); //show back image of pokemon on mouse enter
 }
 
 //create a list of pokemon's
 async function createPokemonsList(type) {
-	const pokemonTypeList = document.createElement(`div`);
-	pokemonTypeList.setAttribute(`id`, `type-list`);
+	const pokemonListDiv = document.createElement(`div`);
+	pokemonListDiv.setAttribute(`id`, `type-list`);
 	const pokemonsList = document.createElement(`ul`);
 	const pokemonsListObject = await getPokemonsOfType(type);
 
@@ -145,8 +149,8 @@ async function createPokemonsList(type) {
 		showPokemonFromList(pokemonLiElement); //add event listener to every pokemon on list
 		pokemonsList.appendChild(pokemonLiElement);
 	}
-	pokemonTypeList.appendChild(pokemonsList);
-	return pokemonTypeList;
+	pokemonListDiv.appendChild(pokemonsList);
+	return pokemonListDiv;
 }
 
 //remove existing list from page
