@@ -7,9 +7,9 @@ const searchInput = document.querySelector(`#search-input`);
 //get pokemon data from pokeapi.co
 async function getPokemon(name) {
 	try {
-		return await axios
-			.get(`https://pokeapi.co/api/v2/pokemon/${name}`)
-			.then((response) => response.data);
+		return await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`).then(
+			(response) => response.json()
+		);
 	} catch (error) {
 		//if pokemon doesn't exist
 		alert(`Can't find a Pokemon with this name or ID.\nPlease try again!`);
@@ -20,9 +20,9 @@ async function getPokemon(name) {
 //get a list of all the pokemon's from the same type
 async function getPokemonsOfType(type) {
 	try {
-		return await axios
-			.get(`https://pokeapi.co/api/v2/type/${type}`)
-			.then((response) => response.data.pokemon);
+		return await fetch(`https://pokeapi.co/api/v2/type/${type}`)
+			.then((response) => response.json())
+			.then((data) => data.pokemon);
 	} catch (error) {
 		//if no more pokemon's from this type exist
 		alert(`There are no more Pokemon's from type: ${type}`);
