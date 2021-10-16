@@ -6,6 +6,8 @@ In this project i used https://pokeapi.co/ to create a pokedex page!
 
 ## Download & Setup:
 
+- Go to [Or's Pokedex](https://orrosman.github.io/pokedex/)\
+  **or**
 - Clone the repository
 - Run `npm run build` command
 
