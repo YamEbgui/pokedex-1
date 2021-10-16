@@ -2,12 +2,11 @@ import * as networking from '../networking/networking';
 import * as DOM from '../DOM/DOM';
 
 /** General & Variables **/
-const searchButton = document.querySelector(`#search-button`);
 const searchInput = document.querySelector(`#search-input`);
 
 /**  Event Listeners **/
-
-searchButton.addEventListener(`click`, async () => {
+document.addEventListener('submit', async () => {
+	event.preventDefault();
 	if (searchInput.value) {
 		//check if user entered name/ID
 		let pokemon = await networking.getPokemon(searchInput.value);
