@@ -17,6 +17,9 @@ function createPokemon(name, height, weight, types, image) {
 	heightElement.replaceChildren(document.createTextNode(height));
 	weightElement.replaceChildren(document.createTextNode(weight));
 	imageElement.setAttribute('src', image);
+	imageElement.classList.add('border');
+	imageElement.classList.add('border-2');
+	imageElement.classList.add('border-dark');
 
 	//handling types
 	if (typeElement.innerHTML) {
