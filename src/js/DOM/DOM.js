@@ -1,7 +1,9 @@
 import * as events from '../events/events';
 import * as networking from '../networking/networking';
+import * as style from './style';
 
 /** DOM **/
+style.searchBar();
 
 //create a pokemon object
 function createPokemon(name, height, weight, types, image) {
@@ -17,26 +19,24 @@ function createPokemon(name, height, weight, types, image) {
 	heightElement.replaceChildren(document.createTextNode(height));
 	weightElement.replaceChildren(document.createTextNode(weight));
 	imageElement.setAttribute('src', image);
-	imageElement.classList.add('border');
-	imageElement.classList.add('border-2');
-	imageElement.classList.add('border-dark');
+	style.imageStyle();
 
 	//handling types
 	if (typeElement.innerHTML) {
 		typeElement.innerHTML = ``; //reset list content
 		for (const type of types) {
 			let typeText = document.createElement(`span`);
+			typeText.setAttribute('id', type);
 			typeText.innerHTML = `${type} `;
 			events.addEventsToType(typeText);
-
 			typeElement.appendChild(typeText);
 		}
 	} else {
 		for (const type of types) {
 			let typeText = document.createElement(`span`);
-			typeText.innerHTML = `${type} `;
+			typeText.setAttribute('id', type);
+			typeText.innerText = `${type} `;
 			events.addEventsToType(typeText);
-
 			typeElement.appendChild(typeText);
 		}
 	}
@@ -66,9 +66,8 @@ export function addPokemonToPage(pokemon) {
 
 //create a list of pokemon's
 export async function createPokemonsList(type) {
-	const pokemonListDiv = document.createElement(`div`);
-	pokemonListDiv.setAttribute(`id`, `type-list`);
-	const pokemonsList = document.createElement(`ul`);
+	const pokemonsList = document.createElement(`un`);
+	pokemonsList.setAttribute(`id`, `type-list`);
 	const pokemonsListObject = await networking.getPokemonsOfType(type);
 
 	//build the list
@@ -78,8 +77,10 @@ export async function createPokemonsList(type) {
 		events.showPokemonFromList(pokemonLiElement); //add event listener to every pokemon on list
 		pokemonsList.appendChild(pokemonLiElement);
 	}
-	pokemonListDiv.appendChild(pokemonsList);
-	return pokemonListDiv;
+	for (const poke of pokemonsList.children) {
+		poke.setAttribute('class', 'dropdown-item');
+	}
+	return pokemonsList;
 }
 
 //remove existing list from page
