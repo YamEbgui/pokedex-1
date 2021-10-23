@@ -1,15 +1,20 @@
 /** API & Network**/
+// const axios = require('axios');
 
 //get pokemon data from pokeapi.co
-export async function getPokemon(name) {
-	try {
-		return await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`).then(
-			(response) => response.json()
-		);
-	} catch (error) {
-		//if pokemon doesn't exist
-		alert(`Can't find a Pokemon with this name or ID.\nPlease try again!`);
-		throw `Pokemon Not Found`;
+export async function getPokemon(pokemonName, username) {
+	const headers = {
+		'Access-Control-Allow-Origin': '*',
+		username: `${username}`,
+	};
+	if (parseInt(pokemonName)) {
+		return await axios
+			.get(`localhost:8080/pokemon/get/${pokemonName}`, headers)
+			.then((response) => response.json());
+	} else {
+		return await axios
+			.get(`localhost:8080/pokemon/query?name=${pokemonName}`, headers)
+			.then((response) => response.json());
 	}
 }
 

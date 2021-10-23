@@ -3,8 +3,15 @@ import * as DOM from '../DOM/DOM';
 
 /** General & Variables **/
 const searchInput = document.querySelector(`#search-input`);
+const usernameButtonInput = document.querySelector(`#username-button`);
 
 /**  Event Listeners **/
+usernameButtonInput.addEventListener('click', () => {
+	const usernameInput = document.querySelector('#username-input');
+	localStorage.setItem('username', usernameInput.value);
+	document.getElementById('username').remove();
+});
+
 document.addEventListener('submit', async () => {
 	event.preventDefault();
 	if (searchInput.value) {
