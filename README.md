@@ -31,3 +31,8 @@ In this project i used https://www.npmjs.com/package/pokedex-promise-v2 & https:
 - [👢Bootstrap](https://getbootstrap.com/)
 - [🕸 Webpack](https://webpack.js.org/)
 - [🏁 Express](https://expressjs.com/)
+
+# Team
+
+- Frontend: Or Rosman
+- Backend: Yam Ebgui
