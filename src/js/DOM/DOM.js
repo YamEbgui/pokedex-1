@@ -111,20 +111,23 @@ export function checkUserStatus() {
 	}
 }
 
-export function userPokemonsList(list) {
+export async function userPokemonsList(list) {
+	const username = localStorage.getItem('username');
 	const listDiv = document.getElementById('user-pokemons');
 	const listUlElement = document.createElement('ul');
-	listUlElement.setAttribute('id','user-pokemon-list')
+	listUlElement.setAttribute('id', 'user-pokemon-list');
 
 	for (const pokemonFile of list.files) {
-		const listElement = document.createElement('li')
-		listElement.innerText = pokemonFile.split('.').slice(0, -1).join('.')
+		const listElement = document.createElement('li');
+		const pokemonId = pokemonFile.split('.').slice(0, -1).join('.');
+		const pokemonData = await networking.getPokemon(pokemonId, username);
+		listElement.innerText = pokemonData.data.name;
 		events.showPokemonFromList(listElement);
 		listElement.setAttribute('class', 'dropdown-item');
-		listUlElement.appendChild(listElement)
+		listUlElement.appendChild(listElement);
 	}
 
-	listDiv.appendChild(listUlElement)
+	listDiv.appendChild(listUlElement);
 }
 
 checkUserStatus();
