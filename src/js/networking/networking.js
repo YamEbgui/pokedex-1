@@ -31,3 +31,39 @@ export async function getPokemonsOfType(type) {
 		alert(`There are no more Pokemon's from type: ${type}`);
 	}
 }
+
+export async function catchPokemon(id, username) {
+	try {
+		const requestCatchPokemon = await axios({
+			method: 'PUT',
+			url: `http://localhost:8080/pokemon/catch/${id}`,
+			data: {},
+			headers: {
+				'Content-Type': 'application/json',
+				'Access-Control-Allow-Origin': '*',
+				user: username,
+			},
+		});
+		console.log(await requestCatchPokemon.json());
+	} catch (e) {
+		console.log('pokemon already caught');
+	}
+}
+
+export async function releasePokemon(id, username) {
+	try {
+		const requestCatchPokemon = await axios({
+			method: 'DELETE',
+			url: `http://localhost:8080/pokemon/release/${id}`,
+			data: {},
+			headers: {
+				'Content-Type': 'application/json',
+				'Access-Control-Allow-Origin': '*',
+				user: username,
+			},
+		});
+		console.log(await requestCatchPokemon.json());
+	} catch (e) {
+		console.log('pokemon already released');
+	}
+}

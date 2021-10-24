@@ -72,6 +72,7 @@ router.delete('/release/:id', async function (req, res) {
 
 const returnData = (data) => {
 	const pokemonResponse = {
+		id: data.id,
 		name: data.name,
 		height: data.height,
 		weight: data.weight,

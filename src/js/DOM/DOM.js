@@ -6,8 +6,9 @@ import * as style from './style';
 style.searchBar();
 
 //create a pokemon object
-function createPokemon(name, height, weight, types, image) {
+function createPokemon(id, name, height, weight, types, image) {
 	//get html elements
+	const idElement = document.getElementById('id');
 	const nameElement = document.getElementById('name');
 	const heightElement = document.getElementById('height');
 	const weightElement = document.getElementById('weight');
@@ -15,6 +16,7 @@ function createPokemon(name, height, weight, types, image) {
 	const imageElement = document.getElementById(`image`);
 
 	//set new values
+	idElement.replaceChildren(document.createTextNode(id));
 	nameElement.replaceChildren(document.createTextNode(name));
 	heightElement.replaceChildren(document.createTextNode(height));
 	weightElement.replaceChildren(document.createTextNode(weight));
@@ -43,6 +45,7 @@ function createPokemon(name, height, weight, types, image) {
 }
 
 export function addPokemonToPage(pokemon) {
+	let id = pokemon.id;
 	let name = pokemon.name;
 	let height = pokemon.height;
 	let weight = pokemon.weight;
@@ -58,7 +61,7 @@ export function addPokemonToPage(pokemon) {
 	if (document.getElementById(`type-list`)) {
 		removeList(document.getElementById(`type-list`));
 	}
-	createPokemon(name, height, weight, types, frontImage);
+	createPokemon(id, name, height, weight, types, frontImage);
 
 	events.showBackImage(frontImage, backImage); //show back image of pokemon on mouse enter
 }

@@ -22,7 +22,7 @@
 	<body class="container-fluid">
 		<h1>POKEDEX</h1>
 
-		<form id="username" style="display: none;">
+		<form id="username" style="display: none">
 			<input type="text" id="username-input" placeholder="username" />
 		</form>
 		<input type="button" id="username-button" value="submit" />
@@ -43,6 +43,11 @@
 
 			<div id="details" class="">
 				<div>
+					ID:
+					<span id="id"></span>
+				</div>
+
+				<div>
 					Name:
 					<span id="name"></span>
 				</div>
@@ -61,6 +66,8 @@
 					Type(s):
 					<span id="type"></span>
 				</div>
+				<button id="catch">Catch</button>
+				<button id="release">Release</button>
 			</div>
 		</div>
 	</body>

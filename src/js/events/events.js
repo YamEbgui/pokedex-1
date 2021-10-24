@@ -82,3 +82,15 @@ export function hideUserInput(button) {
 		}
 	});
 }
+
+document.getElementById('catch').addEventListener('click', () => {
+	const username = localStorage.getItem('username');
+	const id = document.getElementById('id').innerText;
+	networking.catchPokemon(id, username);
+});
+
+document.getElementById('release').addEventListener('click', () => {
+	const username = localStorage.getItem('username');
+	const id = document.getElementById('id').innerText;
+	networking.releasePokemon(id, username);
+});
