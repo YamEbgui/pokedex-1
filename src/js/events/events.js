@@ -69,7 +69,6 @@ export function hideUserInput(button) {
 	const usernameInput = document.querySelector('#username-input');
 	button.value = 'submit';
 	button.addEventListener('click', function addUser() {
-		console.log(usernameInput.value);
 		if (usernameInput.value) {
 			document.getElementById('username').style.display = 'none';
 			localStorage.setItem('username', usernameInput.value);
