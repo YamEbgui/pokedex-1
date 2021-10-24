@@ -67,3 +67,14 @@ export async function releasePokemon(id, username) {
 		console.log('pokemon already released');
 	}
 }
+
+export async function userPokemons(username) {
+	try {
+		const response = await axios.get('http://localhost:8080/pokemon', {
+			headers: { user: username },
+		});
+		return response.data;
+	} catch (e) {
+		console.log(e);
+	}
+}

@@ -94,3 +94,18 @@ document.getElementById('release').addEventListener('click', () => {
 	const id = document.getElementById('id').innerText;
 	networking.releasePokemon(id, username);
 });
+
+document
+	.getElementById('user-pokemons-button')
+	.addEventListener('click', async () => {
+		const username = localStorage.getItem('username');
+		const list = await networking.userPokemons(username);
+
+		if (!document.getElementById(`user-pokemon-list`)) {
+			DOM.userPokemonsList(list);
+		} else {
+			document
+				.getElementById(`user-pokemons`)
+				.removeChild(document.getElementById(`user-pokemon-list`)); //remove list
+		}
+	});

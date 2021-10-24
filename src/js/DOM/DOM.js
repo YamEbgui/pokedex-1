@@ -110,4 +110,20 @@ export function checkUserStatus() {
 		events.hideUserInput(usernameButton);
 	}
 }
+
+export function userPokemonsList(list) {
+	const listDiv = document.getElementById('user-pokemons');
+	const listUlElement = document.createElement('ul');
+	listUlElement.setAttribute('id','user-pokemon-list')
+
+	for (const pokemonFile of list.files) {
+		const listElement = document.createElement('li')
+		listElement.innerText = pokemonFile.split('.').slice(0, -1).join('.')
+		listElement.setAttribute('class', 'dropdown-item');
+		listUlElement.appendChild(listElement)
+	}
+
+	listDiv.appendChild(listUlElement)
+}
+
 checkUserStatus();
