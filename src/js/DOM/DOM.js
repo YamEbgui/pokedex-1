@@ -119,6 +119,7 @@ export function userPokemonsList(list) {
 	for (const pokemonFile of list.files) {
 		const listElement = document.createElement('li')
 		listElement.innerText = pokemonFile.split('.').slice(0, -1).join('.')
+		events.showPokemonFromList(listElement);
 		listElement.setAttribute('class', 'dropdown-item');
 		listUlElement.appendChild(listElement)
 	}
