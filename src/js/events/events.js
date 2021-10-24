@@ -6,11 +6,6 @@ const searchInput = document.querySelector(`#search-input`);
 const usernameButtonInput = document.querySelector(`#username-button`);
 
 /**  Event Listeners **/
-usernameButtonInput.addEventListener('click', () => {
-	const usernameInput = document.querySelector('#username-input');
-	localStorage.setItem('username', usernameInput.value);
-	document.getElementById('username').remove();
-});
 
 document.addEventListener('submit', async () => {
 	event.preventDefault();
@@ -55,5 +50,36 @@ export function addEventsToType(typeElement) {
 export function showPokemonFromList(pokemonLiElement) {
 	pokemonLiElement.addEventListener(`click`, async () => {
 		DOM.getPokemonInfo(pokemonLiElement.innerText);
+	});
+}
+
+export function showUserInput(button) {
+	button.value = 'change user';
+	button.addEventListener('click', function changeUser() {
+		document.getElementById('username').style.display = 'block';
+
+		DOM.checkUserStatus();
+
+		document.removeEventListener('click', changeUser);
+		hideUserInput(button);
+	});
+}
+
+export function hideUserInput(button) {
+	const usernameInput = document.querySelector('#username-input');
+	button.value = 'submit';
+	button.addEventListener('click', function addUser() {
+		console.log(usernameInput.value);
+		if (usernameInput.value) {
+			document.getElementById('username').style.display = 'none';
+			localStorage.setItem('username', usernameInput.value);
+
+			DOM.checkUserStatus();
+
+			document.removeEventListener('click', addUser);
+			showUserInput(button);
+		} else {
+			alert('Please enter a valid username');
+		}
 	});
 }

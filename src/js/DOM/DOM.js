@@ -93,3 +93,18 @@ export async function getPokemonInfo(pokemonName) {
 	const newPokemon = await networking.getPokemon(pokemonName, username);
 	addPokemonToPage(newPokemon.data);
 }
+
+export function checkUserStatus() {
+	const usernameButton = document.querySelector('#username-button');
+	//username exist
+
+	if (localStorage.getItem('username') != null) {
+		usernameButton.value = 'change user';
+		events.showUserInput(usernameButton);
+	} else {
+		document.querySelector('#username').style.display = 'block';
+		usernameButton.value = 'submit';
+		events.hideUserInput(usernameButton);
+	}
+}
+checkUserStatus();
