@@ -89,6 +89,7 @@ function removeList(list) {
 
 //show new pokemon from the type list
 export async function getPokemonInfo(pokemonName) {
-	const newPokemon = await networking.getPokemon(pokemonName);
-	addPokemonToPage(newPokemon);
+	const username = localStorage.getItem('username');
+	const newPokemon = await networking.getPokemon(pokemonName, username);
+	addPokemonToPage(newPokemon.data);
 }
