@@ -1,15 +1,14 @@
 # Pokedex
 
-In this project i used https://pokeapi.co/ to create a pokedex page!
+In this project i used https://www.npmjs.com/package/pokedex-promise-v2 & https://pokeapi.co/ to create a pokedex page with my very own proxy server!
 
 ![](https://emojis.slackmojis.com/emojis/images/1450464069/186/pokeball.png?1450464069)
 
 ## Download & Setup:
 
-- Go to [Or's Pokedex](https://orrosman.github.io/pokedex/)\
-  **or**
 - Clone the repository
-- Run `npm run build` command
+- Run `npm run build` command, to build the project
+- Run `npm run start` command, to run the local server
 
 # Features
 
@@ -18,6 +17,8 @@ In this project i used https://pokeapi.co/ to create a pokedex page!
 - 📃 Click on a pokemon type to see a list of ALL the pokemon's from the same type
   - if a pokemon has more then one type you can see them all 🤗
   - 📚 You can click on a pokemon from the list to get more information about it
+- 🗃 You can catch 'em all with the 'Catch' & 'Release' options
+- 👀 See a list of all the Pokemons you currently have
 
 ### Mobile features
 
@@ -26,5 +27,7 @@ In this project i used https://pokeapi.co/ to create a pokedex page!
 
 # Built with
 
+- [🚩 NodeJS](https://nodejs.dev/)
 - [👢Bootstrap](https://getbootstrap.com/)
 - [🕸 Webpack](https://webpack.js.org/)
+- [🏁 Express](https://expressjs.com/)
