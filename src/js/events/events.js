@@ -16,8 +16,9 @@ document.addEventListener('submit', async () => {
 	event.preventDefault();
 	if (searchInput.value) {
 		//check if user entered name/ID
-		let pokemon = await networking.getPokemon(searchInput.value);
-		DOM.addPokemonToPage(pokemon);
+		const username = localStorage.getItem('username');
+		let pokemon = await networking.getPokemon(searchInput.value, username);
+		DOM.addPokemonToPage(pokemon.data);
 		searchInput.value = ``;
 	} else {
 		alert(`Please enter a Pokemon name or ID`);

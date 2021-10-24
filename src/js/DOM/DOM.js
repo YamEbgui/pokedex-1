@@ -47,14 +47,13 @@ export function addPokemonToPage(pokemon) {
 	let height = pokemon.height;
 	let weight = pokemon.weight;
 	let types = [];
-	let frontImage = pokemon.sprites.front_default;
-	let backImage = pokemon.sprites.back_default;
+	let frontImage = pokemon.front_default;
+	let backImage = pokemon.back_default;
 
 	//get all the pokemon types
 	for (const pokemonType of pokemon.types) {
 		types.push(pokemonType.type.name);
 	}
-
 	//if a list already exist - remove it
 	if (document.getElementById(`type-list`)) {
 		removeList(document.getElementById(`type-list`));

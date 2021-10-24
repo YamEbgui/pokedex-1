@@ -1,9 +1,8 @@
-const { query } = require('express');
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const router = express.Router();
-const userRelativePath = './src/user';
+const userRelativePath = './pokemon-api/src/user';
 
 const Pokedex = require('pokedex-promise-v2');
 const errorHandler = require('../middleware/errorHandler');
@@ -30,7 +29,7 @@ router.get('/get/:id', async function (req, res) {
 
 router.get('/:query', async function (req, res) {
 	try {
-		const { query } = req.params;
+		const query = req.query.name;
 		const pokemonData = await returnPokemon(query);
 		res.send(pokemonData);
 	} catch {
@@ -85,7 +84,7 @@ const returnData = (data) => {
 };
 
 const returnPokemon = async (id) => {
-	return await P.getPokemonByName(id) // with Promise
+	return await P.getPokemonByName(id)
 		.then(function (response) {
 			return returnData(response);
 		})

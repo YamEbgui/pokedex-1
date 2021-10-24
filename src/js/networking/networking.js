@@ -1,20 +1,22 @@
 /** API & Network**/
-// const axios = require('axios');
+const axios = require('axios');
 
 //get pokemon data from pokeapi.co
 export async function getPokemon(pokemonName, username) {
-	const headers = {
-		'Access-Control-Allow-Origin': '*',
-		username: `${username}`,
+	const config = {
+		headers: {
+			'Access-Control-Allow-Origin': '*',
+			user: `${username}`,
+		},
+		params: { name: pokemonName },
 	};
 	if (parseInt(pokemonName)) {
-		return await axios
-			.get(`localhost:8080/pokemon/get/${pokemonName}`, headers)
-			.then((response) => response.json());
+		return await axios.get(
+			`http://localhost:8080/pokemon/get/${pokemonName}`,
+			config
+		);
 	} else {
-		return await axios
-			.get(`localhost:8080/pokemon/query?name=${pokemonName}`, headers)
-			.then((response) => response.json());
+		return await axios.get(`http://localhost:8080/pokemon/query`, config);
 	}
 }
 
